@@ -129,13 +129,13 @@ Below are three graphs (Histogram, ROC Curve, and Confusion Matrix) to help demo
 
 At first, our approach was to extract specific facial features that indicated emotional states associated with lying such as blink frequency, variance in mouth movements, variance in face angle, and variance of the face from the facial center. Our Python script `irisDetection.py` used Python libraries OpenCV to capture video and process the frames and MediaPipe to detect facial landmarks that allow us to extract features such as blinking rate and mouth shape. Then, we would use a logistic regression model to predict the probability an individual was lying based on these features.
 
-[Figure 4: Landmark Extraction](images/irisDetection.png)
+![Figure 4: Landmark Extraction](images/irisDetection.png)
 
 *Figure 4: Utilized MediaPipe landmarks to extract blinking rate, mouth movement, and facial movement.*
 
 A difficulty in this implementation was that it was extremely hard to find enough variance in the bluffing versus non-bluffing data. Since the facial features that were being tracked are the same ones that the normal naked eye tends to look for in detecting bluffing, they can easily be faked or manipulated. Common cues such as increased blink frequency, mouth variations, or subtle facial movements are well-known signs of lying but can be consciously controlled by someone trying to bluff. Conversely, individuals telling the truth may also exhibit these behaviors we measure unintentionally.
 
-[Figure 5: Feature Output](images/feature_output.png)
+![Figure 5: Feature Output](images/feature_output.png)
 
 *Figure 5: While the data does have variations between lying and telling the truth, it is not consistent enough and can be very subtle. This data also accounts only for a few features, failing to consider other potentially important facial indicators.*
 
