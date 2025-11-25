@@ -113,19 +113,31 @@ To evaluate our model, we created a separate test dataset using 52 3-second vide
 
 Below are three graphs (Histogram, ROC Curve, and Confusion Matrix) to help demonstrate the accuracy of the model.
 
-Figure 1: Histogram — fairly accurate predictions except for a few misclassifications.
-Figure 2: ROC Curve — AUC of 0.96 indicates strong separation.
-Figure 3: Confusion Matrix — truth predictions high, lie predictions weaker.
+![Figure 1: Histogram — fairly accurate predictions except for a few misclassifications.](images/histogram.png)
 
-(Insert your images here in Markdown when uploading.)
+*Figure 1: The Histogram shows fairly accurate predictions on the test dataset, except for a few misclassifications of lying segments.*
+
+![Figure 2: ROC Curve — AUC of 0.96 indicates strong separation.](images/ROC.png)
+
+*Figure 2: The ROC Curve (and AUC of 0.96) shows that our model is very accurate and can effectively distinguish between lying and telling the truth. Building a more diverse test dataset and collecting inputs created from others is necessary to see how truly good our model is however.*
+
+![Figure 3: Confusion Matrix — truth predictions high, lie predictions weaker.](images/confusion_matrix.png)
+
+*Figure 3: Similar to the Histogram in Figure 1, the Confusion Matrix shows that our model is fairly accurate on the test dataset, though makes some mistakes for lying segments.*
 
 ## 7. Obstacles
 
 At first, our approach was to extract specific facial features that indicated emotional states associated with lying such as blink frequency, variance in mouth movements, variance in face angle, and variance of the face from the facial center. Our Python script `irisDetection.py` used Python libraries OpenCV to capture video and process the frames and MediaPipe to detect facial landmarks that allow us to extract features such as blinking rate and mouth shape. Then, we would use a logistic regression model to predict the probability an individual was lying based on these features.
 
+[Figure 4: Landmark Extraction](images/irisDetection.png)
+
+*Figure 4: Utilized MediaPipe landmarks to extract blinking rate, mouth movement, and facial movement.*
+
 A difficulty in this implementation was that it was extremely hard to find enough variance in the bluffing versus non-bluffing data. Since the facial features that were being tracked are the same ones that the normal naked eye tends to look for in detecting bluffing, they can easily be faked or manipulated. Common cues such as increased blink frequency, mouth variations, or subtle facial movements are well-known signs of lying but can be consciously controlled by someone trying to bluff. Conversely, individuals telling the truth may also exhibit these behaviors we measure unintentionally.
 
-(Insert Figures 4 and 5 if desired.)
+[Figure 5: Feature Output](images/feature_output.png)
+
+*Figure 5: While the data does have variations between lying and telling the truth, it is not consistent enough and can be very subtle. This data also accounts only for a few features, failing to consider other potentially important facial indicators.*
 
 To overcome this limitation, the features that the model would be trained on had to be more accurate and precise, capturing deeper patterns that were not as easily manipulated. Therefore, we shifted to using Convolutional Neural Networks (CNNs) and Long Short-Term Memory (LSTM) networks. Our decision for using CNNs was motivated by its usefulness for capturing spatial features from the facial landmarks. Using CNNs will allow us to learn complex patterns in facial expressions without using manual feature extraction, making it not only more efficient but more accurate because we can capture all relevant patterns that was not originally captured in our manual extraction. Using LSTMs help in analyzing sequential patterns over time since bluffing is something that occurs over time rather than in an instance. This combination of CNN and LSTM allows for more accurate deception detection by learning complex patterns that track both temporal and spatial features in our data.
 
